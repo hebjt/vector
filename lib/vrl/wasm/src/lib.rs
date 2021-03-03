@@ -3,6 +3,11 @@ use vrl::{diagnostic::Formatter, state, Runtime, Value};
 use vrl_stdlib as stdlib;
 use wasm_bindgen::prelude::*;
 
+// Use `wee_alloc` as the global allocator (for smaller binaries)
+#[cfg(feature = "small_binary")]
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
 // The module takes in a VRL program and a VRL event as input
 #[derive(Deserialize, Serialize)]
 struct Input {
